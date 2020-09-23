@@ -23,8 +23,8 @@ const tableModel = [
 
 function App() {
 
-    const [key, setkey] = useState('Key YXRlbmRpbWVudG90ZXN0OmEwTGlacURLalJLdWFaM3RhMFlZ');
-    const [url, setUrl] = useState('https://http.msging.net/commands');
+    const [key, setkey] = useState('');
+    const [url, setUrl] = useState('');
     const [data, setData] = useState([]);
     const [selected, setSeleted] = useState([]);
     const [spinner, setSpinner] = useState()
