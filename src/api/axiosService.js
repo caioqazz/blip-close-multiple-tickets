@@ -87,7 +87,7 @@ export const getOpenTickets = async (key, url, toastError) => {
 
 
 export const getLastMessage = async (key, url, customerIdentity, ticketId) => {
-
+    console.log('loading messages')
     const headers = {
         "Content-Type": "application/json",
         Authorization: `${key}`
