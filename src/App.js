@@ -6,7 +6,7 @@ import { PageTemplate } from "components/PageTemplate"
 import { getOpenTickets, closeTicket } from "api/axiosService"
 import { Button, Form, Col, Spinner, Row } from "react-bootstrap"
 import { BlipTable } from "components/BlipTable";
-import {  sortData } from './util';
+import { sortData } from './util';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ItemModal from './projectComponents/ItemModal'
@@ -51,12 +51,13 @@ function App() {
 
     const handleClosing = async () => {
         let successNumber = 0;
+
         for (const item of selected) {
-            if (await closeTicket(key, url, item.id, handleError))
+            if (await closeTicket(key, url, item.id, handleError)) {
                 successNumber++
+            }
         }
         successNumber > 0 && toast.success(`${successNumber} ticket(s) closed`);
-
         await loadData();
     }
 
@@ -86,7 +87,7 @@ function App() {
                             <Form.Group as={Row} >
                                 <Form.Label column sm="3">Url to send commands</Form.Label>
                                 <Col sm="9">
-                                    <Form.Control type="text"  required placeholder="https://http.msging.net/commands" value={url} onChange={(e) => { setUrl(e.target.value) }} /><br />
+                                    <Form.Control type="text" required placeholder="https://http.msging.net/commands" value={url} onChange={(e) => { setUrl(e.target.value) }} /><br />
                                 </Col>
 
                                 <Form.Label column sm="3">Header authentication (Authorization)</Form.Label>
@@ -104,6 +105,7 @@ function App() {
 
                             <h3>Open Tickets</h3>
                             <p> Click on tickets to see their information </p>
+
                             <BlipTable
                                 idKey="id"
                                 model={tableModel}

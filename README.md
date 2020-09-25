@@ -1,25 +1,27 @@
-# BLiP Build AI Model Analysis File
+# BLiP - Close Multiple Tickets
 
- This is a BLiP tool made to help users to build  AI Model Analysis File with ease.
+ This is a BLiP tool made to help users to close multiple tickets with ease.
 
- Visit the sample [page here](https://blip-build-ai-model-analysis-file.netlify.app).
+ Visit the sample [page here](https://blip-close-multiple-tickets.netlify.app/).
 
-## How can I export the file
+## How can I close the tickets
 
-1. Present your [key authorization](https://help.blip.ai/docs/en/api-sdks/como-encontrar-a-api-key-do-meu-bot/#docsNav) and click to load.
+1. Present your [key authorization](https://help.blip.ai/docs/en/api-sdks/como-encontrar-a-api-key-do-meu-bot/#docsNav) and your Url to send commands and click to load.
+![](./images/0.png)
+2. All tickets will be presented.
 ![](./images/1.png)
-2. All intents and user text will be presented.
+3. Click on tickets to see their information, if you want to.
 ![](./images/2.png)
-3. Select all tuples that you want and click to export.
+4. Select all tuples that you want and click to close.
 ![](./images/3.png)
-4. Update the file exported into your bot.
+5. All tickets selected will be close.
 ![](./images/4.png)
 
 ## Getting started from this project
 
 1. Download or clone the project from `git`(the recommended way):
 
-`git clone https://github.com/takenet/blip-plugin-sample.git`
+`git clone this repository`
 
 2. Install all packages from npm:
 
