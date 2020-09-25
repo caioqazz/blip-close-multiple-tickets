@@ -17,7 +17,7 @@ const tableModel = [
     { label: "Customer Identity", key: "customerIdentity" },
     { label: "Team", key: "team" },
     { label: "Open Date", key: "openDate" },
-    { label: "Last Message Date", key: "lastMessageDate" },
+    { label: "Last Client Message Date", key: "lastMessageDate" },
 ];
 
 
