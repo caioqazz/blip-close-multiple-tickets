@@ -61,7 +61,7 @@ export const getOpenTickets = async (key, url, toastError) => {
         "id": uuidv4(),
         "to": "postmaster@desk.msging.net",
         "method": "get",
-        "uri": "/tickets?$filter=status%20eq%20'open'&$skip=0&$take=5000"
+        "uri": "/tickets?$filter=status%20eq%20'open'&$take=5000"
     }
     try {
         let response = await axios.post(url, body, {
@@ -69,12 +69,15 @@ export const getOpenTickets = async (key, url, toastError) => {
         });
         let items = [];
         for (const item of response.data.resource.items) {
-            items.push({ ...item, lastMessageDate: await getLastMessage(key, url, item.customerIdentity) })
+            items.push({
+                ...item,
+                lastMessageDate: await getLastMessage(key, url, item.customerIdentity, item.id)
+            })
         }
 
         return items;
     } catch (error) {
-        console.error(`Error to load tickets`)
+        console.error(`Error to load tickets` + error)
         toastError(`Error to load tickets`)
         return [];
     }
@@ -83,7 +86,7 @@ export const getOpenTickets = async (key, url, toastError) => {
 }
 
 
-export const getLastMessage = async (key, url, customerIdentity) => {
+export const getLastMessage = async (key, url, customerIdentity, ticketId) => {
 
     const headers = {
         "Content-Type": "application/json",
@@ -93,16 +96,22 @@ export const getLastMessage = async (key, url, customerIdentity) => {
     const body = {
         "id": uuidv4(),
         "method": "get",
-        "uri": `/threads/${customerIdentity}?$take=100`
+        "to": "postmaster@desk.msging.net",
+        "uri": `/tickets/${ticketId}/messages?$take=100${customerIdentity.includes("tunnel") ? '&getFromOwnerIfTunnel=true' : ''}`
     }
     try {
         let response = await axios.post(url, body, {
             headers: headers
         });
+
+
+        if (response.data.resource.items.length === 0)
+            return 'More than 90 days';
+
         return response.data.resource.items.find(e => e.direction === 'received').date;
     } catch (error) {
-        console.error(`Error to get last message`)
-        return "couldn't find"
+        console.error(`Error to get last message - ${error}`)
+        return "Couldn't find"
 
     }
 
@@ -136,7 +145,7 @@ export const closeTicket = async (key, url, ticketId, toastError) => {
         if (response.data.status === 'success') {
             return true;
         }
-        
+
         toastError(`Error to close ticket ${ticketId}`);
         return false;
     } catch (error) {

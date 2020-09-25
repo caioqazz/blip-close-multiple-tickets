@@ -86,7 +86,7 @@ function App() {
                             <Form.Group as={Row} >
                                 <Form.Label column sm="3">Url to send commands</Form.Label>
                                 <Col sm="9">
-                                    <Form.Control type="text" required placeholder="https://http.msging.net/commands" value={url} onChange={(e) => { setUrl(e.target.value) }} /><br />
+                                    <Form.Control type="text"  required placeholder="https://http.msging.net/commands" value={url} onChange={(e) => { setUrl(e.target.value) }} /><br />
                                 </Col>
 
                                 <Form.Label column sm="3">Header authentication (Authorization)</Form.Label>
@@ -102,20 +102,20 @@ function App() {
                         </div>
                         <div style={spinner && !spinner.visibility ? { visibility: '' } : { visibility: 'hidden' }} className="tickets-box">
 
-                            <h3>Opened Tickets</h3>
+                            <h3>Open Tickets</h3>
                             <p> Click on tickets to see their information </p>
                             <BlipTable
                                 idKey="id"
                                 model={tableModel}
                                 data={data}
                                 canSelect={true}
-                                sort={[]}
+                                sort={{}}
                                 onSortSet={(item) => { sortData(data, item) }}
                                 onItemClick={(event, item) => { setModal({ position: event.nativeEvent.clientY, display: true, item: item }); }}
                                 onItemSelect={(item) => setSeleted(item)}
                                 selectedItems={selected}
                                 bodyHeight="1300px"
-                                actions={[<Button variant="danger" onClick={handleClosing}>Close</Button>]}
+                                actions={[<Button key='123' variant="danger" onClick={handleClosing}>Close</Button>]}
                             />
                         </div>
                     </div>

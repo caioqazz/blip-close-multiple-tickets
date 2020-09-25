@@ -2,7 +2,7 @@ import React from "react"
 import { Modal, Table } from "react-bootstrap"
 import PropTypes from 'prop-types'
 
-function ModalView({ data, position, display, handleClose }) {
+function ModalView({ data = {}, position, display, handleClose }) {
     position -= 400;
     const TableItems = () => {
         let items = [];
@@ -31,7 +31,7 @@ function ModalView({ data, position, display, handleClose }) {
             <Modal.Body>
                 <Table striped bordered hover>
                     <tbody>
-                        <TableItems /> 
+                        <TableItems />
                     </tbody>
                 </Table>
             </Modal.Body>
@@ -41,7 +41,7 @@ function ModalView({ data, position, display, handleClose }) {
 
 
 ModalView.propTypes = {
-    data: PropTypes.arrayOf(Object).isRequired,
+    data: Object.isRequired,
     position: PropTypes.number.isRequired,
     display: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
