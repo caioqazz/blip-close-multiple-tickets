@@ -61,7 +61,7 @@ export const getOpenTickets = async (key, url, toastError) => {
         "id": uuidv4(),
         "to": "postmaster@desk.msging.net",
         "method": "get",
-        "uri": "/tickets?$filter=status%20eq%20'open'&$take=5000"
+        "uri": "/tickets?$filter=status%20eq%20'open'&$take=2500"
     }
     try {
         let response = await axios.post(url, body, {
