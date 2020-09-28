@@ -50,7 +50,7 @@ export const getAnswers = async (key, url, intent) => {
     }
 }
 
-export const getOpenTickets = async (key, url, toastError) => {
+export const getOpenTickets = async (key, url, toastError, updateProgressBar) => {
 
     const headers = {
         "Content-Type": "application/json",
@@ -61,7 +61,7 @@ export const getOpenTickets = async (key, url, toastError) => {
         "id": uuidv4(),
         "to": "postmaster@desk.msging.net",
         "method": "get",
-        "uri": "/tickets?$filter=status%20eq%20'open'&$take=2500"
+        "uri": "/tickets?$filter=status%20eq%20'open'&$skip=0&$take=5000"
     }
     try {
         let response = await axios.post(url, body, {
@@ -73,7 +73,11 @@ export const getOpenTickets = async (key, url, toastError) => {
                 ...item,
                 lastMessageDate: await getLastMessage(key, url, item.customerIdentity, item.id)
             })
+
+            let percentage = ((items.length / response.data.resource.items.length) * 100);
+            updateProgressBar(percentage.toFixed(2));
         }
+
 
         return items;
     } catch (error) {
@@ -87,7 +91,6 @@ export const getOpenTickets = async (key, url, toastError) => {
 
 
 export const getLastMessage = async (key, url, customerIdentity, ticketId) => {
-    console.log('loading messages')
     const headers = {
         "Content-Type": "application/json",
         Authorization: `${key}`
@@ -103,7 +106,6 @@ export const getLastMessage = async (key, url, customerIdentity, ticketId) => {
         let response = await axios.post(url, body, {
             headers: headers
         });
-
 
         if (response.data.resource.items.length === 0)
             return 'More than 90 days';
@@ -121,7 +123,7 @@ export const getLastMessage = async (key, url, customerIdentity, ticketId) => {
 
 
 export const closeTicket = async (key, url, ticketId, toastError) => {
-
+    console.log("closing ticket");
     const headers = {
         "Content-Type": "application/json",
         Authorization: `${key}`

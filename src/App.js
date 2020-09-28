@@ -4,7 +4,7 @@ import { PageHeader } from "components/PageHeader"
 import { CommonProvider } from "contexts/CommonContext"
 import { PageTemplate } from "components/PageTemplate"
 import { getOpenTickets, closeTicket } from "api/axiosService"
-import { Button, Form, Col, Spinner, Row } from "react-bootstrap"
+import { Button, Form, Col, Row, ProgressBar } from "react-bootstrap"
 import { BlipTable } from "components/BlipTable";
 import { sortData } from './util';
 import { ToastContainer, toast } from "react-toastify";
@@ -27,7 +27,8 @@ function App() {
     const [url, setUrl] = useState('');
     const [data, setData] = useState([]);
     const [selected, setSeleted] = useState([]);
-    const [spinner, setSpinner] = useState()
+    const [progress, setProgress] = useState();
+    const [percentage, setPercentage] = useState(0);
     const [modal, setModal] = useState({ position: 0, display: false, item: {} });
 
     const handleSubmit = async (event) => {
@@ -35,12 +36,17 @@ function App() {
         loadData();
     }
 
+
+
+
     const loadData = async () => {
         setData([]);
         setSeleted([]);
-        setSpinner({ visibility: true })
-        setData(await getOpenTickets(key, url, handleError));
-        setSpinner({ visibility: false })
+        setProgress({ visibility: true })
+        setPercentage(0)
+        setData(await getOpenTickets(key, url, handleError, setPercentage))
+        setProgress({ visibility: false })
+        setPercentage(0)
     }
 
 
@@ -98,10 +104,10 @@ function App() {
                             </Form.Group>
                             <Button className="float-right" type="submit" >Load</Button>
                         </Form>
-                        <div className="spinner" style={spinner && spinner.visibility ? { display: '' } : { display: "none" }}>
-                            <Spinner animation="border" variant="info" />
+                        <div style={progress && progress.visibility ? { display: '' } : { display: "none" }}>
+                            <ProgressBar now={percentage} label={`${percentage}%`} />
                         </div>
-                        <div style={spinner && !spinner.visibility ? { visibility: '' } : { visibility: 'hidden' }} className="tickets-box">
+                        <div style={progress && !progress.visibility ? { visibility: '' } : { visibility: 'hidden' }} className="tickets-box">
 
                             <h3>Open Tickets</h3>
                             <p> Click on tickets to see their information </p>
