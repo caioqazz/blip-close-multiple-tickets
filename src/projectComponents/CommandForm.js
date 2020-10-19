@@ -5,8 +5,8 @@ import { FiSearch } from 'react-icons/fi';
 const CommandForm = ({
     handleSubmit
 }) => {
-    const [key, setkey] = useState('Key dGVzdGVmc2Rmc2Rmc2Rnc2Q6TU1yTnNvNjlMSXR5TmdKWG02a0U=');
-    const [url, setUrl] = useState('https://http.msging.net/commands');
+    const [key, setkey] = useState('');
+    const [url, setUrl] = useState('');
     const [status, setStatus] = useState({ waiting: false, open: true });
     const [pagination, setPagination] = useState({ skip: 0, take: 5000 });
     const [identities, setIdentities] = useState({ agent: '', customer: '' });
