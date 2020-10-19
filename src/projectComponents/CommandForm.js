@@ -3,7 +3,8 @@ import { Button, Form, Col, Row } from "react-bootstrap"
 import { FiSearch } from 'react-icons/fi';
 
 const CommandForm = ({
-    handleSubmit
+    handleSubmit,
+    buttonDisable
 }) => {
     const [key, setkey] = useState('');
     const [url, setUrl] = useState('');
@@ -14,7 +15,7 @@ const CommandForm = ({
     const [filterDisplay, setFilterDisplay] = useState(false)
 
     return (
-        <Form onSubmit={(e) => { handleSubmit(e, { key, url, status, pagination, identities, dates }); console.log({ key, url, status, pagination, identities, dates }) }}>
+        <Form onSubmit={(e) => { handleSubmit(e, { key, url, status, pagination, identities, dates })}}>
             <Form.Group as={Row} >
                 <Form.Label column sm="3">Url to send commands</Form.Label>
                 <Col sm="9">
@@ -95,7 +96,7 @@ const CommandForm = ({
                 </Form.Row>
             </div>
 
-            <Button className="float-right" type="submit" >Load</Button>
+            <Button className="float-right" type="submit" disabled={buttonDisable && buttonDisable.visibility ? true : false}>Load</Button>
         </Form>
     )
 }

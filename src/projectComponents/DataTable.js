@@ -8,6 +8,7 @@ const tableModel = [
     { label: "Customer Identity", key: "customerIdentity" },
     { label: "Team", key: "team" },
     { label: "Open Date", key: "openDate" },
+    { label: "Status", key: "status" },
     { label: "Last Client Message Date", key: "lastMessageDate" },
 ];
 const DataTable = ({
@@ -16,13 +17,14 @@ const DataTable = ({
     progress,
     selected,
     setSeleted,
-    setModal
+    setModal, 
+    disableButton
 }) => {
     
     return (
         <div style={progress && !progress.visibility ? { visibility: '' } : { visibility: 'hidden' }} className="tickets-box">
 
-            <h3>Loaded Tickets</h3>
+            <h3>Tickets</h3>
             <p> Click on tickets to see their information </p>
 
             <BlipTable
@@ -36,7 +38,7 @@ const DataTable = ({
                 onItemSelect={(item) => setSeleted(item)}
                 selectedItems={selected}
                 bodyHeight="1300px"
-                actions={[<Button key='123' variant="danger" onClick={handleClosing}>Close</Button>]}
+                actions={[<Button key='123' variant="danger" disabled={disableButton ? true : false} onClick={handleClosing}>Close</Button>]}
             />
         </div>
     )
