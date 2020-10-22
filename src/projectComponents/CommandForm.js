@@ -28,7 +28,7 @@ const CommandForm = ({
                 </Col>
 
             </Form.Group>
-            <Button  style={{ display: !filterDisplay ? '' : 'none' }} onClick={() => { setFilterDisplay(!filterDisplay)}}> <FiSearch /> Filter</Button>
+            <Button  variant="secondary" style={{ display: !filterDisplay ? '' : 'none' }} onClick={() => { setFilterDisplay(!filterDisplay)}}> <FiSearch /> Filter</Button>
             <div style={{display: filterDisplay ? '' : 'none' }}>
             <Form.Row>
                 <Form.Group as={Col}>
