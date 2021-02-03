@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form, Col, Row } from "react-bootstrap"
-import { FiSearch } from 'react-icons/fi';
+import { FiSearch, FiHelpCircle } from 'react-icons/fi';
 
 const CommandForm = ({
     handleSubmit,
@@ -15,37 +15,46 @@ const CommandForm = ({
     const [filterDisplay, setFilterDisplay] = useState(false)
 
     return (
-        <Form onSubmit={(e) => { handleSubmit(e, { key, url, status, pagination, identities, dates })}}>
+        <Form onSubmit={(e) => { handleSubmit(e, { key, url, status, pagination, identities, dates }) }}>
             <Form.Group as={Row} >
                 <Form.Label column sm="3">Url to send commands</Form.Label>
-                <Col sm="9">
+                <Col sm="8">
                     <Form.Control type="text" required placeholder="https://http.msging.net/commands" value={url} onChange={(e) => { setUrl(e.target.value) }} /><br />
+                </Col>
+                <Col sm="1">
+                    <a  target="_blank" rel="noopener noreferrer" href="https://help.blip.ai/hc/pt-br/articles/360058712774-Como-encontrar-a-API-KEY-do-meu-bot-">
+                        <FiHelpCircle />
+                    </a>
                 </Col>
 
                 <Form.Label column sm="3">Header authentication (Authorization)</Form.Label>
-                <Col sm="9">
+                <Col sm="8">
                     <Form.Control type="text" required placeholder="Key bGFiqpolfyaW9u..." value={key} onChange={(e) => { setkey(e.target.value) }} />
                 </Col>
-
+                <Col sm="1">
+                    <a  target="_blank" rel="noopener noreferrer" href="https://help.blip.ai/hc/pt-br/articles/360058712774-Como-encontrar-a-API-KEY-do-meu-bot-">
+                        <FiHelpCircle />
+                    </a>
+                </Col>
             </Form.Group>
-            <Button  variant="secondary" style={{ display: !filterDisplay ? '' : 'none' }} onClick={() => { setFilterDisplay(!filterDisplay)}}> <FiSearch /> Filter</Button>
-            <div style={{display: filterDisplay ? '' : 'none' }}>
-            <Form.Row>
-                <Form.Group as={Col}>
-                    <Form.Label >Status</Form.Label>
-                    <Form.Check type='checkbox' label="Waiting" checked={status.waiting} onChange={(e) => { setStatus({ ...status, waiting: e.target.checked }) }} />
-                    <Form.Check disabled type='checkbox' label="Open" checked={status.open} onChange={(e) => { setStatus({ ...status, open: e.target.checked }) }} />
-                </Form.Group>
-                <Form.Group as={Col} >
-                    <Form.Label>Skip</Form.Label>
-                    <Form.Control type="number" min='0' value={pagination.skip} onChange={(e) => { setPagination({ ...pagination, skip: e.target.value }) }} required />
-                </Form.Group>
-                <Form.Group as={Col} >
-                    <Form.Label>Take</Form.Label>
-                    <Form.Control type="number" min='1' value={pagination.take} onChange={(e) => { setPagination({ ...pagination, take: e.target.value }) }} required />
-                </Form.Group>
-            </Form.Row>
-            
+            <Button variant="secondary" style={{ display: !filterDisplay ? '' : 'none' }} onClick={() => { setFilterDisplay(!filterDisplay) }}> <FiSearch /> Filter</Button>
+            <div style={{ display: filterDisplay ? '' : 'none' }}>
+                <Form.Row>
+                    <Form.Group as={Col}>
+                        <Form.Label >Status</Form.Label>
+                        <Form.Check type='checkbox' label="Waiting" checked={status.waiting} onChange={(e) => { setStatus({ ...status, waiting: e.target.checked }) }} />
+                        <Form.Check disabled type='checkbox' label="Open" checked={status.open} onChange={(e) => { setStatus({ ...status, open: e.target.checked }) }} />
+                    </Form.Group>
+                    <Form.Group as={Col} >
+                        <Form.Label>Skip</Form.Label>
+                        <Form.Control type="number" min='0' value={pagination.skip} onChange={(e) => { setPagination({ ...pagination, skip: e.target.value }) }} required />
+                    </Form.Group>
+                    <Form.Group as={Col} >
+                        <Form.Label>Take</Form.Label>
+                        <Form.Control type="number" min='1' value={pagination.take} onChange={(e) => { setPagination({ ...pagination, take: e.target.value }) }} required />
+                    </Form.Group>
+                </Form.Row>
+
                 <Form.Row>
                     <Form.Group as={Col} >
                         <Form.Label>Customer Identity</Form.Label>
