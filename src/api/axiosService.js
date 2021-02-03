@@ -67,6 +67,10 @@ export const getOpenTickets = async (header, toastError, updateProgressBar) => {
         let response = await axios.post(header.url, body, {
             headers: headers
         });
+
+        if (response.data.status !== 'success') throw new Error('Exception message: Error to load tickets ' + JSON.stringify(response));
+
+
         let items = [];
         for (const item of response.data.resource.items) {
             items.push({
@@ -78,13 +82,11 @@ export const getOpenTickets = async (header, toastError, updateProgressBar) => {
             updateProgressBar(percentage.toFixed(2));
         }
         if (header.dates.lastMessageDate.date !== '')
-            return items.filter(e =>{
-                if(header.dates.lastMessageDate.select === '<' && header.dates.lastMessageDate.date > e.lastMessageDate)
-                return e
-                else if(header.dates.lastMessageDate.select === '>' && header.dates.lastMessageDate.date < e.lastMessageDate)
-                return e
-            })
-              
+            return items.filter(e =>
+                (header.dates.lastMessageDate.select === '<' && header.dates.lastMessageDate.date > e.lastMessageDate)
+                || (header.dates.lastMessageDate.select === '>' && header.dates.lastMessageDate.date < e.lastMessageDate)
+            )
+
         else
             return items
     } catch (error) {
@@ -150,12 +152,12 @@ export const closeTicket = async (key, url, ticketId, toastError) => {
         const response = await axios.post(url, body, {
             headers: headers
         });
-        console.log("closing")
+
         if (response.data.status === 'success') {
             return true;
         }
 
-        toastError(`Error to close ticket ${ticketId}`);
+        toastError(`Error to close ticket ${ticketId}- ${JSON.stringify(response)}`);
         return false;
     } catch (error) {
         console.error(`Error to close ticket ${ticketId} - ${error}`);
