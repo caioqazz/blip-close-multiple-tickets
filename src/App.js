@@ -3,7 +3,7 @@ import "blip-toolkit/dist/blip-toolkit.css"
 import { PageHeader } from "components/PageHeader"
 import { CommonProvider } from "contexts/CommonContext"
 import { PageTemplate } from "components/PageTemplate"
-import { getOpenTickets, closeTicket } from "api/axiosService"
+import {  closeTicket, getTicketsPagination } from "api/axiosService"
 import { ProgressBar } from "react-bootstrap"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,7 +40,7 @@ function App() {
         setSeleted([]);
         setProgress({ visibility: true })
         setPercentage(0)
-        setData(await getOpenTickets(header, handleError, setPercentage))
+        setData(await getTicketsPagination(header, handleError, setPercentage))
         setProgress({ visibility: false })
         setPercentage(0)
     }
