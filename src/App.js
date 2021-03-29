@@ -52,8 +52,13 @@ function App() {
     let percentage = 0;
     for (const item of selected) {
       let result = header.status.closedClient
-        ? await closeTicket(header.key, header.url, item.id, handleError)
-        : await closeTicketAlreadyClosedClient(header.key, header.url, item.id, handleError)
+        ? await closeTicketAlreadyClosedClient(
+            header.key,
+            header.url,
+            item.id,
+            handleError
+          )
+        : await closeTicket(header.key, header.url, item.id, handleError);
 
       if (result) {
         successNumber++;
