@@ -5,6 +5,7 @@ import { BlipTabs } from 'blip-toolkit'
 import PropTypes from 'prop-types'
 import { sortData } from './util'
 import { Button } from 'react-bootstrap'
+
 const tableModel: Array<Object> = [
   { label: 'Sequential Id', key: 'sequentialId' },
   { label: 'Customer Identity', key: 'customerIdentity' },
@@ -74,55 +75,38 @@ function MainPage({ service, commomService }) {
   }
 
   useEffect(() => {
-    new BlipTabs('tab-nav')
+    //  new BlipTabs('tab-nav')
     fetchApi()
   }, [commomService])
 
   return (
     <div id="tab-nav" className="bp-tabs-container">
-      <ul className="bp-tab-nav">
-        <li>
-          {/* eslint-disable-next-line */}
-          <a href="#" data-ref="contacts">
-            Contacts
-          </a>
-        </li>
-        <li>
-          {/* eslint-disable-next-line */}
-          <a href="#" data-ref="threads">
-            Threads
-          </a>
-        </li>
-      </ul>
-      <div className="bp-tab-content fl w-100" data-ref="contacts">
-        <h3>Tickets</h3>
-        <p> Click on tickets to see their information </p>
-        <button onClick={fetchApi}>Teste</button>
-        <BlipTable
-          idKey="id"
-          model={tableModel}
-          data={tickets}
-          canSelect={true}
-          onSortSet={(item) => {
-            sortData(tickets, item)
-          }}
-          // onItemClick={(event, item) => {
-          //   setModal({
-          //     position: event.nativeEvent.clientY,
-          //     display: true,
-          //     item: item,
-          //   })
-          // }}
-          onItemSelect={(item) => setSeleted(item)}
-          selectedItems={selected}
-          bodyHeight="1300px"
-          actions={[
-            <Button key="123" variant="danger" onClick={handleClosing}>
-              Close
-            </Button>,
-          ]}
-        />
-      </div>
+      <h3>Tickets</h3>
+      <p> Click on tickets to see their information </p>
+      <BlipTable
+        idKey="id"
+        model={tableModel}
+        data={tickets}
+        canSelect={true}
+        onSortSet={(item) => {
+          sortData(tickets, item)
+        }}
+        // onItemClick={(event, item) => {
+        //   setModal({
+        //     position: event.nativeEvent.clientY,
+        //     display: true,
+        //     item: item,
+        //   })
+        // }}
+        onItemSelect={(item) => setSeleted(item)}
+        selectedItems={selected}
+        bodyHeight="1300px"
+        actions={[
+          <Button key="123" variant="danger" onClick={handleClosing}>
+            Close
+          </Button>,
+        ]}
+      />
     </div>
   )
 }
