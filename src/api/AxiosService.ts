@@ -133,8 +133,8 @@ export class AxiosService {
         )
       else return items
     } catch (error) {
-      console.error(`Error to load tickets` + error)
-      AxiosCommomService.showErrorToast(`Error to load tickets`)
+      console.error('Error to load tickets' + error)
+      AxiosCommomService.showErrorToast('Error to load tickets')
       return []
     }
   }
