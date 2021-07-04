@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 import { AxiosCommomService } from './AxiosCommomService'
+import { builderTicketFilter } from '../util'
 const TAKE_PAGINATION_MAX_VALUE = 100
 export class AxiosService {
   static headers: Object
@@ -98,7 +99,9 @@ export class AxiosService {
       id: uuidv4(),
       to: 'postmaster@desk.msging.net',
       method: 'get',
-      uri: `/tickets?$skip=${filter.pagination.skip}&$take=100`,
+      uri: `/tickets?$skip=${
+        filter.pagination.skip
+      }&$take=100&$filter=${builderTicketFilter(filter)}`,
     }
     try {
       const response = await axios.post(AxiosService.url, body, {
@@ -162,6 +165,8 @@ export class AxiosService {
   }
 
   static closeTicket = async (ticketId) => {
+    console.log('closeTicket')
+
     const body = {
       id: uuidv4(),
       to: 'postmaster@desk.msging.net',

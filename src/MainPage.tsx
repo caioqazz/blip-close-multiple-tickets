@@ -1,63 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import 'blip-toolkit/dist/blip-toolkit.css'
 import { BlipTable } from './components/BlipTable'
-import { BlipTabs } from 'blip-toolkit'
 import PropTypes from 'prop-types'
 import { sortData } from './util'
 import { Button } from 'react-bootstrap'
 import { FilterForm } from './projectComponents/FilterForm'
-import FilterConstant from './constants/FilterConstant.json'
-const tableModel: Array<Object> = [
-  { label: 'Sequential Id', key: 'sequentialId' },
-  { label: 'Customer Identity', key: 'customerIdentity' },
-  { label: 'Team', key: 'team' },
-  { label: 'Open Date', key: 'openDate' },
-  { label: 'Status', key: 'status' },
-  { label: 'Last Client Message Date', key: 'lastMessageDate' },
-]
-const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+import { FILTER_DEFAULT, TICKET_TABLE_MODEL } from './constants/constant.json'
+
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 function MainPage({ service, commomService }) {
   const [application, setApplication] = useState<Object>({})
   const [selected, setSeleted] = useState([])
-  const [filter, setFilter] = useState(FilterConstant)
+  const [filter, setFilter] = useState(FILTER_DEFAULT)
   const [tickets, setTickets] = useState<Array<any>>([])
   const [modal, setModal] = useState({ position: 0, display: false, item: {} })
 
   const getTickets = async () => {
     console.log(filter)
     commomService.withLoading(async () => {
+      setSeleted([])
       setTickets(await service.getTicketsPagination(filter))
     })
   }
 
   const fetchApi = async () => {
     await wait(100)
-    commomService.withLoading(async () => {
-      setApplication(await service.getApplication())
-      await getTickets()
-    })
+    await getTickets()
+    setApplication(await service.getApplication())
   }
 
   const handleClosing = async () => {
-    // for (const item of selected) {
-    //   let result = header.status.closedClient
-    //     ? await closeTicketAlreadyClosedClient(
-    //         header.key,
-    //         header.url,
-    //         item.id,
-    //         handleError
-    //       )
-    //     : await closeTicket(header.key, header.url, item.id, handleError)
-    //   if (result) {
-    //     successNumber++
-    //   }
-    //   percentage = (successNumber / selected.length) * 100
-    //   setPercentage(percentage.toFixed(2))
-    // }
-    // setPercentage(0)
-    // setClosingProgress(false)
-    // successNumber > 0 && toast.success(`${successNumber} ticket(s) closed`)
-    // await loadData(header)
+    let successNumber = 0
+    for (const ticket of selected) {
+      const result = filter.status.closedClient
+        ? await service.closeTicketAlreadyClosedClient(ticket.id)
+        : await service.closeTicket(ticket.id)
+
+      if (result) successNumber++
+    }
+
+    if (successNumber > 0)
+      commomService.showSuccessToast(`${successNumber} ticket(s) closed`)
+    await getTickets()
   }
 
   useEffect(() => {
@@ -76,7 +60,7 @@ function MainPage({ service, commomService }) {
       <p> Click on tickets to see their information </p>
       <BlipTable
         idKey="id"
-        model={tableModel}
+        model={TICKET_TABLE_MODEL}
         data={tickets}
         canSelect={true}
         onSortSet={(item) => {

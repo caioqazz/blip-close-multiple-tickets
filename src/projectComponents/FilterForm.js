@@ -32,11 +32,12 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               checked={data.status.closedClient}
               onChange={(e) => {
                 handleChange({
-                  ...data, "status": {
+                  ...data,
+                  status: {
                     closedClient: e.target.checked,
                     waiting: false,
                     open: false,
-                  }
+                  },
                 })
               }}
             />
@@ -46,11 +47,12 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               checked={data.status.waiting}
               onChange={(e) => {
                 handleChange({
-                  ...data, "status": {
+                  ...data,
+                  status: {
                     waiting: e.target.checked,
                     closedClient: false,
                     open: false,
-                  }
+                  },
                 })
               }}
             />
@@ -60,11 +62,12 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               checked={data.status.open}
               onChange={(e) => {
                 handleChange({
-                  ...data, "status": {
+                  ...data,
+                  status: {
                     open: e.target.checked,
                     waiting: false,
                     closedClient: false,
-                  }
+                  },
                 })
               }}
             />
@@ -76,7 +79,10 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               min="0"
               value={data.pagination.skip}
               onChange={(e) => {
-                handleChange({ ...data, "pagination": { ...data.pagination, skip: e.target.value } })
+                handleChange({
+                  ...data,
+                  pagination: { ...data.pagination, skip: e.target.value },
+                })
               }}
               required
             />
@@ -88,7 +94,10 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               min="1"
               value={data.pagination.take}
               onChange={(e) => {
-                handleChange({ ...data, "pagination": { ...data.pagination, take: e.target.value } })
+                handleChange({
+                  ...data,
+                  pagination: { ...data.pagination, take: e.target.value },
+                })
               }}
               required
             />
@@ -102,7 +111,10 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               type="text"
               value={data.identities.customer}
               onChange={(e) => {
-                handleChange({ ...data, "identities": { ...data.identities, customer: e.target.value } })
+                handleChange({
+                  ...data,
+                  identities: { ...data.identities, customer: e.target.value },
+                })
               }}
             />
           </Form.Group>
@@ -112,7 +124,10 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               type="text"
               value={data.identities.agent}
               onChange={(e) => {
-                handleChange({ ...data, "identities": { ...data.identities, agent: e.target.value } })
+                handleChange({
+                  ...data,
+                  identities: { ...data.identities, agent: e.target.value },
+                })
               }}
               placeholder="Ex: johndoe%40gmail.com@blip.ai"
             />
@@ -126,10 +141,11 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               as="select"
               onChange={(e) => {
                 handleChange({
-                  ...data, "dates": {
+                  ...data,
+                  dates: {
                     ...data.dates,
                     storage: { ...data.dates.storage, select: e.target.value },
-                  }
+                  },
                 })
               }}
             >
@@ -140,13 +156,14 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               type="datetime-local"
               onChange={(e) => {
                 handleChange({
-                  ...data, "dates": {
+                  ...data,
+                  dates: {
                     ...data.dates,
                     storage: {
                       ...data.dates.storage,
                       date: `${e.target.value}:00.000Z`,
                     },
-                  }
+                  },
                 })
               }}
             />
@@ -158,10 +175,11 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               as="select"
               onChange={(e) => {
                 handleChange({
-                  ...data, "dates": {
+                  ...data,
+                  dates: {
                     ...data.dates,
                     open: { ...data.dates.open, select: e.target.value },
-                  }
+                  },
                 })
               }}
             >
@@ -172,10 +190,14 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               type="datetime-local"
               onChange={(e) => {
                 handleChange({
-                  ...data, "dates": {
+                  ...data,
+                  dates: {
                     ...data.dates,
-                    open: { ...data.dates.open, date: `${e.target.value}:00.000Z` },
-                  }
+                    open: {
+                      ...data.dates.open,
+                      date: `${e.target.value}:00.000Z`,
+                    },
+                  },
                 })
               }}
             />
@@ -187,10 +209,11 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               as="select"
               onChange={(e) => {
                 handleChange({
-                  ...data, "dates": {
+                  ...data,
+                  dates: {
                     ...data.dates,
                     status: { ...data.dates.status, select: e.target.value },
-                  }
+                  },
                 })
               }}
             >
@@ -201,13 +224,14 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               type="datetime-local"
               onChange={(e) => {
                 handleChange({
-                  ...data, "dates": {
+                  ...data,
+                  dates: {
                     ...data.dates,
                     status: {
                       ...data.dates.status,
                       date: `${e.target.value}:00.000Z`,
                     },
-                  }
+                  },
                 })
               }}
             />
@@ -219,13 +243,14 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               as="select"
               onChange={(e) => {
                 handleChange({
-                  ...data, "dates": {
+                  ...data,
+                  dates: {
                     ...data.dates,
                     lastMessageDate: {
                       ...data.dates.lastMessageDate,
                       select: e.target.value,
                     },
-                  }
+                  },
                 })
               }}
             >
@@ -236,13 +261,14 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
               type="datetime-local"
               onChange={(e) => {
                 handleChange({
-                  ...data, "dates": {
+                  ...data,
+                  dates: {
                     ...data.dates,
                     lastMessageDate: {
                       ...data.dates.lastMessageDate,
                       date: `${e.target.value}:00.000Z`,
                     },
-                  }
+                  },
                 })
               }}
             />
@@ -251,14 +277,11 @@ export const FilterForm = ({ handleSubmit, data, handleChange }) => {
         <Button
           className="float-right"
           type="submit"
-        // disabled={buttonDisable && buttonDisable.visibility ? true : false}
+          // disabled={buttonDisable && buttonDisable.visibility ? true : false}
         >
           Load
         </Button>
       </div>
-
-
     </Form>
   )
 }
-
