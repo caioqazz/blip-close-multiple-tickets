@@ -20,7 +20,7 @@ export class ApplicationService {
           },
         },
       })
-     
+
       return response !== undefined || false
     } catch (error) {
       return false

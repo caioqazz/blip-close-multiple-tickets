@@ -108,7 +108,7 @@ export class AxiosService {
         throw new Error(
           'Exception message: Error to load tickets ' + JSON.stringify(response)
         )
-       
+
       const items = []
       for (const item of response.data.resource.items) {
         items.push({
@@ -119,7 +119,7 @@ export class AxiosService {
           ),
         })
       }
-      
+
       if (filter.dates.lastMessageDate.date !== '')
         return items.filter(
           (e) =>
@@ -128,7 +128,6 @@ export class AxiosService {
             (filter.dates.lastMessageDate.select === '>' &&
               filter.dates.lastMessageDate.date < e.lastMessageDate)
         )
-        
       else return items
     } catch (error) {
       console.error(`Error to load tickets` + error)

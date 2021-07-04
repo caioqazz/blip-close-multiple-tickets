@@ -5,7 +5,8 @@ import { BlipTabs } from 'blip-toolkit'
 import PropTypes from 'prop-types'
 import { sortData } from './util'
 import { Button } from 'react-bootstrap'
-
+import { FilterForm } from './projectComponents/FilterForm'
+import FilterConstant from './constants/FilterConstant.json'
 const tableModel: Array<Object> = [
   { label: 'Sequential Id', key: 'sequentialId' },
   { label: 'Customer Identity', key: 'customerIdentity' },
@@ -18,41 +19,26 @@ const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 function MainPage({ service, commomService }) {
   const [application, setApplication] = useState<Object>({})
   const [selected, setSeleted] = useState([])
+  const [filter, setFilter] = useState(FilterConstant)
   const [tickets, setTickets] = useState<Array<any>>([])
-  //filter
-  const [status, setStatus] = useState({
-    closedClient: false,
-    waiting: false,
-    open: true,
-  })
-  const [pagination, setPagination] = useState({ skip: 0, take: 100 })
-  const [identities, setIdentities] = useState({ agent: '', customer: '' })
-  const [dates, setDates] = useState({
-    storage: { select: '<', date: '' },
-    open: { select: '<', date: '' },
-    status: { select: '<', date: '' },
-    lastMessageDate: { select: '<', date: '' },
-  })
+  const [modal, setModal] = useState({ position: 0, display: false, item: {} })
+
+  const getTickets = async () => {
+    console.log(filter)
+    commomService.withLoading(async () => {
+      setTickets(await service.getTicketsPagination(filter))
+    })
+  }
 
   const fetchApi = async () => {
     await wait(100)
     commomService.withLoading(async () => {
       setApplication(await service.getApplication())
-      setTickets(
-        await service.getTicketsPagination({
-          status,
-          pagination,
-          identities,
-          dates,
-        })
-      )
+      await getTickets()
     })
   }
+
   const handleClosing = async () => {
-    // let successNumber = 0
-    // setPercentage(0)
-    // setClosingProgress(true)
-    // let percentage = 0
     // for (const item of selected) {
     //   let result = header.status.closedClient
     //     ? await closeTicketAlreadyClosedClient(
@@ -82,6 +68,11 @@ function MainPage({ service, commomService }) {
   return (
     <div id="tab-nav" className="bp-tabs-container">
       <h3>Tickets</h3>
+      <FilterForm
+        handleSubmit={getTickets}
+        data={filter}
+        handleChange={setFilter}
+      />
       <p> Click on tickets to see their information </p>
       <BlipTable
         idKey="id"
