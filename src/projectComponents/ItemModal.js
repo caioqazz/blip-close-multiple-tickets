@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, Table } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
-function ModalView({ data = {}, position, display, handleClose }) {
+function ItemModal({ data = {}, position, display, handleClose }) {
   position -= 400
   const TableItems = () => {
     const items = []
@@ -38,11 +38,11 @@ function ModalView({ data = {}, position, display, handleClose }) {
   )
 }
 
-ModalView.propTypes = {
+ItemModal.propTypes = {
   data: Object.isRequired,
   position: PropTypes.number.isRequired,
   display: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
 }
 
-export default ModalView
+export default ItemModal

@@ -6,6 +6,7 @@ import { sortData } from './util'
 import { Button } from 'react-bootstrap'
 import { FilterForm } from './projectComponents/FilterForm'
 import { FILTER_DEFAULT, TICKET_TABLE_MODEL } from './constants/constant.json'
+import ItemModal from './projectComponents/ItemModal'
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 function MainPage({ service, commomService }) {
@@ -45,12 +46,17 @@ function MainPage({ service, commomService }) {
   }
 
   useEffect(() => {
-    //  new BlipTabs('tab-nav')
     fetchApi()
   }, [commomService])
 
   return (
     <div id="tab-nav" className="bp-tabs-container">
+      <ItemModal
+        position={modal.position}
+        display={modal.display}
+        data={modal.item}
+        handleClose={() => setModal({ ...modal, display: false })}
+      />
       <h3>Tickets</h3>
       <FilterForm
         handleSubmit={getTickets}
@@ -66,13 +72,13 @@ function MainPage({ service, commomService }) {
         onSortSet={(item) => {
           sortData(tickets, item)
         }}
-        // onItemClick={(event, item) => {
-        //   setModal({
-        //     position: event.nativeEvent.clientY,
-        //     display: true,
-        //     item: item,
-        //   })
-        // }}
+        onItemClick={(event, item) => {
+          setModal({
+            position: event.nativeEvent.clientY,
+            display: true,
+            item: item,
+          })
+        }}
         onItemSelect={(item) => setSeleted(item)}
         selectedItems={selected}
         bodyHeight="1300px"

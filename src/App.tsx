@@ -11,7 +11,7 @@ import { ToastContainer } from 'react-toastify'
 import LoadingOverlay from 'react-loading-overlay'
 import { AxiosCommomService } from './api/AxiosCommomService'
 import { CommomService } from './api/CommomService'
-const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
 function App() {
   const [isHttp, setIsHttp] = useState(false)
   const [isFormHttpFilled, setIsFormHttpFilled] = useState(false)

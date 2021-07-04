@@ -14,7 +14,7 @@ const BlipTableContainer = ({
   canSelect = false,
   canSort = true,
   actions,
-  onItemClick = () => {},
+  onItemClick = (event, item) => {},
   emptyMessage,
   selectedItems,
   bodyHeight = '200px',
