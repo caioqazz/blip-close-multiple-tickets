@@ -53,7 +53,5 @@ export const builderTicketFilter = (filter) => {
       filter.identities.agent
     )}')`
   }
-  console.log(stringFilter)
-
   return stringFilter
 }

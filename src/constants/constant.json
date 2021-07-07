@@ -58,5 +58,10 @@
       "label": "Last Client Message Date",
       "key": "lastMessageDate"
     }
-  ]
+  ],
+  "MODAL_DEFAULT": {
+    "position": 0,
+    "display": false,
+    "item": {}
+  }
 }

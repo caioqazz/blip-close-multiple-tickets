@@ -7,7 +7,8 @@ export class ApplicationService {
     })
     return application
   }
-  static wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+  static wait = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms))
   static ping = async () => {
     try {
       const { response } = await IframeMessageProxy.sendMessage({

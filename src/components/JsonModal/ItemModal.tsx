@@ -20,7 +20,7 @@ export function ItemModal({ data = {}, position, display, handleClose }) {
         )
       })
     }
-    return <>items.map()</>
+    return <>{items.map((e) => e)}</>
   }
 
   return (
@@ -40,9 +40,8 @@ export function ItemModal({ data = {}, position, display, handleClose }) {
 }
 
 ItemModal.propTypes = {
-  data: PropTypes.arrayOf(Object).isRequired,
+  data: PropTypes.object,
   position: PropTypes.number.isRequired,
   display: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
 }
-

@@ -5,32 +5,34 @@ import PropTypes from 'prop-types'
 import { sortData } from './util'
 import { Button } from 'react-bootstrap'
 import { FilterForm } from './components/FilterForm'
-import { FILTER_DEFAULT, TICKET_TABLE_MODEL } from './constants/constant.json'
+import {
+  FILTER_DEFAULT,
+  TICKET_TABLE_MODEL,
+  MODAL_DEFAULT,
+} from './constants/constant.json'
 import { JsonModal } from './components/JsonModal'
+import { Filter } from './constants/entities'
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 function MainPage({ service, commomService }) {
-  // const [application, setApplication] = useState<Object>({})
   const [selected, setSeleted] = useState([])
-  const [filter, setFilter] = useState(FILTER_DEFAULT)
+  const [filter, setFilter] = useState<Filter>(FILTER_DEFAULT)
   const [tickets, setTickets] = useState<Array<any>>([])
-  const [modal, setModal] = useState({ position: 0, display: false, item: {} })
+  const [modal, setModal] = useState(MODAL_DEFAULT)
 
-  const getTickets = async () => {
-    console.log(filter)
+  const getTickets = async (): Promise<void> => {
     commomService.withLoading(async () => {
       setSeleted([])
       setTickets(await service.getTicketsPagination(filter))
     })
   }
 
-  const fetchApi = async () => {
+  const fetchApi = async (): Promise<void> => {
     await wait(100)
     await getTickets()
-    // setApplication(await service.getApplication())
   }
 
-  const handleClosing = async () => {
+  const handleClosing = async (): Promise<void> => {
     let successNumber = 0
     for (const ticket of selected) {
       const result = filter.status.closedClient

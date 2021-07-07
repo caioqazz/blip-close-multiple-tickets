@@ -13,11 +13,14 @@ import { AxiosCommomService } from './api/AxiosCommomService'
 import { CommomService } from './api/CommomService'
 
 function App() {
-  const [isHttp, setIsHttp] = useState(false)
-  const [isFormHttpFilled, setIsFormHttpFilled] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isHttp, setIsHttp] = useState<boolean>(false)
+  const [isFormHttpFilled, setIsFormHttpFilled] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const fillHeader = (e, { key, url }) => {
+  const fillHeader = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    { key, url }
+  ): void => {
     e.preventDefault()
     AxiosCommomService.withLoading(async () => {
       AxiosService.init(key, url)
@@ -32,7 +35,7 @@ function App() {
     })
   }, [])
 
-  const title = `Sample ${isHttp ? 'Tool' : 'Plugin'}`
+  const title = `Close Multiple Tickets ${isHttp ? 'Tool' : 'Plugin'}`
 
   return (
     <CommonProvider>

@@ -2,6 +2,8 @@ import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 import { AxiosCommomService } from './AxiosCommomService'
 import { builderTicketFilter } from '../util'
+import { Filter } from '../constants/entities'
+
 const TAKE_PAGINATION_MAX_VALUE = 100
 export class AxiosService {
   static headers: Object
@@ -77,11 +79,11 @@ export class AxiosService {
     }
   }
 
-  static getTicketsPagination = async (filter) => {
+  static getTicketsPagination = async (filter: Filter) => {
     const ticketFilter = JSON.parse(JSON.stringify(filter))
 
     let tickets = []
-    
+
     while (ticketFilter.pagination.skip < filter.pagination.take) {
       const ticketsPagination = await AxiosService.getTickets(ticketFilter)
       if (ticketsPagination.length === 0) break
@@ -96,7 +98,7 @@ export class AxiosService {
     )
   }
 
-  static getTickets = async (filter) => {
+  static getTickets = async (filter: Filter) => {
     const body = {
       id: uuidv4(),
       to: 'postmaster@desk.msging.net',
@@ -141,7 +143,10 @@ export class AxiosService {
     }
   }
 
-  static getLastMessage = async (customerIdentity, ticketId) => {
+  static getLastMessage = async (
+    customerIdentity: string,
+    ticketId: string
+  ) => {
     const body = {
       id: uuidv4(),
       method: 'get',
@@ -166,9 +171,7 @@ export class AxiosService {
     }
   }
 
-  static closeTicket = async (ticketId) => {
-    console.log('closeTicket')
-
+  static closeTicket = async (ticketId: string) => {
     const body = {
       id: uuidv4(),
       to: 'postmaster@desk.msging.net',
@@ -199,7 +202,7 @@ export class AxiosService {
     }
   }
 
-  static closeTicketAlreadyClosedClient = async (ticketId) => {
+  static closeTicketAlreadyClosedClient = async (ticketId: string) => {
     const body = {
       id: uuidv4(),
       to: 'postmaster@desk.msging.net',
