@@ -81,8 +81,10 @@ export class AxiosService {
     const ticketFilter = JSON.parse(JSON.stringify(filter))
 
     let tickets = []
+    
     while (ticketFilter.pagination.skip < filter.pagination.take) {
       const ticketsPagination = await AxiosService.getTickets(ticketFilter)
+      if (ticketsPagination.length === 0) break
 
       tickets = [...tickets, ...ticketsPagination]
 

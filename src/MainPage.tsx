@@ -4,13 +4,13 @@ import { BlipTable } from './components/BlipTable'
 import PropTypes from 'prop-types'
 import { sortData } from './util'
 import { Button } from 'react-bootstrap'
-import { FilterForm } from './projectComponents/FilterForm'
+import { FilterForm } from './components/FilterForm'
 import { FILTER_DEFAULT, TICKET_TABLE_MODEL } from './constants/constant.json'
-import ItemModal from './projectComponents/ItemModal'
+import { JsonModal } from './components/JsonModal'
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 function MainPage({ service, commomService }) {
-  const [application, setApplication] = useState<Object>({})
+  // const [application, setApplication] = useState<Object>({})
   const [selected, setSeleted] = useState([])
   const [filter, setFilter] = useState(FILTER_DEFAULT)
   const [tickets, setTickets] = useState<Array<any>>([])
@@ -27,7 +27,7 @@ function MainPage({ service, commomService }) {
   const fetchApi = async () => {
     await wait(100)
     await getTickets()
-    setApplication(await service.getApplication())
+    // setApplication(await service.getApplication())
   }
 
   const handleClosing = async () => {
@@ -47,11 +47,12 @@ function MainPage({ service, commomService }) {
 
   useEffect(() => {
     fetchApi()
-  }, [commomService])
+    // eslint-disable-next-line
+  }, [service, commomService])
 
   return (
     <div id="tab-nav" className="bp-tabs-container">
-      <ItemModal
+      <JsonModal
         position={modal.position}
         display={modal.display}
         data={modal.item}
@@ -63,6 +64,7 @@ function MainPage({ service, commomService }) {
         data={filter}
         handleChange={setFilter}
       />
+      <br />
       <p> Click on tickets to see their information </p>
       <BlipTable
         idKey="id"

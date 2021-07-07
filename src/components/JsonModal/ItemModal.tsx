@@ -2,9 +2,10 @@ import React from 'react'
 import { Modal, Table } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
-function ItemModal({ data = {}, position, display, handleClose }) {
+export function ItemModal({ data = {}, position, display, handleClose }) {
+  // eslint-disable-next-line no-param-reassign
   position -= 400
-  const TableItems = () => {
+  const TableItems = (): JSX.Element => {
     const items = []
     if (data !== undefined) {
       const keys = Object.keys(data)
@@ -19,7 +20,7 @@ function ItemModal({ data = {}, position, display, handleClose }) {
         )
       })
     }
-    return items
+    return <>items.map()</>
   }
 
   return (
@@ -39,10 +40,9 @@ function ItemModal({ data = {}, position, display, handleClose }) {
 }
 
 ItemModal.propTypes = {
-  data: Object.isRequired,
+  data: PropTypes.arrayOf(Object).isRequired,
   position: PropTypes.number.isRequired,
   display: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
 }
 
-export default ItemModal

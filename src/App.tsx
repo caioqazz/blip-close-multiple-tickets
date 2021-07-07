@@ -55,7 +55,7 @@ function App() {
             spinner
             text="Loading your content..."
             styles={{
-              overlay: (base) => ({
+              overlay: (base: Object) => ({
                 ...base,
                 borderRadius: '10px',
                 backgroundColor: 'rgba(153,153,153,0.4)',
