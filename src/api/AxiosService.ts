@@ -16,7 +16,7 @@ export class AxiosService {
     }
     AxiosService.url = url
   }
-  static wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+  static wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
   static getThreads = async () => {
     const body = {
       id: uuidv4(),
