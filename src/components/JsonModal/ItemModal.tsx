@@ -24,7 +24,7 @@ export function ItemModal({ data = {}, position, display, handleClose }) {
   }
 
   return (
-    <Modal style={{ paddingTop: position }} show={display} onHide={handleClose}>
+    <Modal style={{ paddingTop: position, padding: '50px' }} show={display} onHide={handleClose}>
       <Modal.Header closeButton>
         <h3>Ticket information</h3>
       </Modal.Header>

@@ -19,7 +19,11 @@ export const FilterForm = ({
     >
       <Button
         variant="secondary"
-        style={{ display: !filterDisplay ? '' : 'none' }}
+        style={{
+          display: !filterDisplay ? '' : 'none',
+          paddingLeft: '100px',
+          paddingRight: '100px',
+        }}
         className="float-right"
         onClick={() => {
           setFilterDisplay(!filterDisplay)
@@ -130,6 +134,7 @@ export const FilterForm = ({
                 <Form.Control
                   type="text"
                   value={data.identities.customer}
+                  placeholder="Ex: 1656325099@telegram.gw.msging.net"
                   onChange={(e) => {
                     handleChange({
                       ...data,
@@ -187,7 +192,7 @@ export const FilterForm = ({
                         ...data.dates,
                         storage: {
                           ...data.dates.storage,
-                          date: `${e.target.value}:00.000Z`,
+                          date: `${e.target.value}`,
                         },
                       },
                     })
@@ -221,7 +226,7 @@ export const FilterForm = ({
                         ...data.dates,
                         open: {
                           ...data.dates.open,
-                          date: `${e.target.value}:00.000Z`,
+                          date: `${e.target.value}`,
                         },
                       },
                     })
@@ -258,7 +263,7 @@ export const FilterForm = ({
                         ...data.dates,
                         status: {
                           ...data.dates.status,
-                          date: `${e.target.value}:00.000Z`,
+                          date: `${e.target.value}`,
                         },
                       },
                     })
@@ -295,7 +300,7 @@ export const FilterForm = ({
                         ...data.dates,
                         lastMessageDate: {
                           ...data.dates.lastMessageDate,
-                          date: `${e.target.value}:00.000Z`,
+                          date: `${e.target.value}`,
                         },
                       },
                     })

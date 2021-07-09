@@ -5,7 +5,7 @@ import { Filter } from '../constants/entities'
 const TAKE_PAGINATION_MAX_VALUE = 100
 
 export class ApplicationService {
-  static getApplication = async () => {
+  static getApplication = async (): Promise<any> => {
     const { response: application } = await IframeMessageProxy.sendMessage({
       action: 'getApplication',
     })
@@ -14,7 +14,7 @@ export class ApplicationService {
   static wait = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms))
 
-  static ping = async () => {
+  static ping = async (): Promise<boolean> => {
     try {
       const { response } = await IframeMessageProxy.sendMessage({
         action: 'sendCommand',
@@ -32,7 +32,7 @@ export class ApplicationService {
       return false
     }
   }
-  static getContacts = async () => {
+  static getContacts = async (): Promise<any> => {
     try {
       const {
         response: { items },
@@ -53,7 +53,7 @@ export class ApplicationService {
       return []
     }
   }
-  static getTicketsPagination = async (filter: Filter) => {
+  static getTicketsPagination = async (filter: Filter): Promise<any> => {
     const ticketFilter = JSON.parse(JSON.stringify(filter))
 
     let tickets = []
@@ -73,7 +73,7 @@ export class ApplicationService {
       (value, index, self) => self.map((x) => x.id).indexOf(value.id) === index
     )
   }
-  static getTickets = async (filter: Filter) => {
+  static getTickets = async (filter: Filter): Promise<any> => {
     try {
       const { response } = await IframeMessageProxy.sendMessage({
         action: 'sendCommand',
@@ -118,7 +118,7 @@ export class ApplicationService {
   static getLastMessage = async (
     customerIdentity: string,
     ticketId: string
-  ) => {
+  ): Promise<any> => {
     try {
       const { response } = await IframeMessageProxy.sendMessage({
         action: 'sendCommand',
@@ -145,7 +145,7 @@ export class ApplicationService {
     }
   }
 
-  static getThreads = async () => {
+  static getThreads = async (): Promise<any> => {
     try {
       const {
         response: { items },
@@ -167,7 +167,7 @@ export class ApplicationService {
     }
   }
 
-  static closeTicket = async (ticketId: string) => {
+  static closeTicket = async (ticketId: string): Promise<boolean> => {
     try {
       await IframeMessageProxy.sendMessage({
         action: 'sendCommand',
@@ -194,7 +194,9 @@ export class ApplicationService {
     }
   }
 
-  static closeTicketAlreadyClosedClient = async (ticketId: string) => {
+  static closeTicketAlreadyClosedClient = async (
+    ticketId: string
+  ): Promise<boolean> => {
     try {
       await IframeMessageProxy.sendMessage({
         action: 'sendCommand',
@@ -221,7 +223,7 @@ export class ApplicationService {
       return false
     }
   }
-  static createTicket = async (customerIdentity: string) => {
+  static createTicket = async (customerIdentity: string): Promise<any> => {
     try {
       const { response } = await IframeMessageProxy.sendMessage({
         action: 'sendCommand',

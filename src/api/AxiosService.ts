@@ -9,15 +9,16 @@ export class AxiosService {
   static headers: Object
   static url: string
 
-  static init(key: string, url: string) {
+  static init(key: string, url: string): void {
     AxiosService.headers = {
       'Content-Type': 'application/json',
       Authorization: key,
     }
     AxiosService.url = url
   }
-  static wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-  static getThreads = async () => {
+  static wait = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms))
+  static getThreads = async (): Promise<any> => {
     const body = {
       id: uuidv4(),
       method: 'get',
@@ -35,7 +36,7 @@ export class AxiosService {
       return []
     }
   }
-  static getContacts = async () => {
+  static getContacts = async (): Promise<any> => {
     const body = {
       id: uuidv4(),
       method: 'get',
@@ -57,7 +58,7 @@ export class AxiosService {
       return []
     }
   }
-  static getApplication = async () => {
+  static getApplication = async (): Promise<any> => {
     const body = {
       id: uuidv4(),
       method: 'get',
@@ -79,7 +80,7 @@ export class AxiosService {
     }
   }
 
-  static getTicketsPagination = async (filter: Filter) => {
+  static getTicketsPagination = async (filter: Filter): Promise<any> => {
     const ticketFilter = JSON.parse(JSON.stringify(filter))
 
     let tickets = []
@@ -98,7 +99,7 @@ export class AxiosService {
     )
   }
 
-  static getTickets = async (filter: Filter) => {
+  static getTickets = async (filter: Filter): Promise<any> => {
     const body = {
       id: uuidv4(),
       to: 'postmaster@desk.msging.net',
@@ -146,7 +147,7 @@ export class AxiosService {
   static getLastMessage = async (
     customerIdentity: string,
     ticketId: string
-  ) => {
+  ): Promise<any> => {
     const body = {
       id: uuidv4(),
       method: 'get',
@@ -171,7 +172,7 @@ export class AxiosService {
     }
   }
 
-  static closeTicket = async (ticketId: string) => {
+  static closeTicket = async (ticketId: string): Promise<boolean> => {
     const body = {
       id: uuidv4(),
       to: 'postmaster@desk.msging.net',
@@ -202,7 +203,9 @@ export class AxiosService {
     }
   }
 
-  static closeTicketAlreadyClosedClient = async (ticketId: string) => {
+  static closeTicketAlreadyClosedClient = async (
+    ticketId: string
+  ): Promise<boolean> => {
     const body = {
       id: uuidv4(),
       to: 'postmaster@desk.msging.net',

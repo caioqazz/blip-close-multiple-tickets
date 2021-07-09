@@ -1,3 +1,1 @@
-export interface ServiceBase {
-    
-}
+export interface ServiceBase {}

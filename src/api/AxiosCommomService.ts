@@ -4,17 +4,17 @@ export class AxiosCommomService {
   // eslint-disable-next-line no-unused-vars
   static loadingHookFunc: Function = (isActive: boolean) => {}
 
-  static startLoading = () => {
+  static startLoading = (): void => {
     AxiosCommomService.loadingHookFunc(true)
   }
-  static stopLoading = () => {
+  static stopLoading = (): void => {
     AxiosCommomService.loadingHookFunc(false)
   }
   static showSuccessToast = (message: string) => toast.success(message)
 
   static showErrorToast = (message: string) => toast.error(message)
 
-  static setLoadingHookFunc = async (func: Function) => {
+  static setLoadingHookFunc = async (func: Function): Promise<any> => {
     AxiosCommomService.loadingHookFunc = func
   }
   static resolveAfterSeconds(time: number) {
@@ -28,7 +28,7 @@ export class AxiosCommomService {
   static withLoading = async (
     func: Function,
     waitTime?: number | undefined
-  ) => {
+  ): Promise<any> => {
     AxiosCommomService.startLoading()
     waitTime !== undefined &&
       (await AxiosCommomService.resolveAfterSeconds(waitTime))
