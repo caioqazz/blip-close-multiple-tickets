@@ -11,6 +11,8 @@ import { ToastContainer } from 'react-toastify'
 import LoadingOverlay from 'react-loading-overlay'
 import { AxiosCommomService } from './api/AxiosCommomService'
 import { CommomService } from './api/CommomService'
+import ReactGA from 'react-ga'
+import Footer from './Footer'
 
 function App() {
   const [isHttp, setIsHttp] = useState<boolean>(false)
@@ -30,6 +32,10 @@ function App() {
 
   useEffect(() => {
     AxiosCommomService.setLoadingHookFunc(setIsLoading)
+    ReactGA.initialize(process.env.REACT_APP_GA_KEY, { useExistingGa: true })
+    ReactGA.ga('create', process.env.REACT_APP_GA_KEY, 'auto', {
+      cookieFlags: 'SameSite=None; Secure',
+    })
     AxiosCommomService.withLoading(async () => {
       setIsHttp(!(await ApplicationService.ping()))
     })
@@ -78,10 +84,12 @@ function App() {
               <MainPage
                 service={!isHttp ? ApplicationService : AxiosService}
                 commomService={!isHttp ? CommomService : AxiosCommomService}
+                isHttp={isHttp}
               />
             )}
           </LoadingOverlay>
         </PageTemplate>
+        <Footer />
       </div>
     </CommonProvider>
   )

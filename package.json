@@ -1,7 +1,8 @@
 {
-  "name": "blip-plugin-example",
+  "name": "blip-close-multiple-tickets",
   "version": "0.1.0",
   "private": true,
+  "author": "Caio Freitas",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
@@ -15,6 +16,7 @@
     "react": "^16.12.0",
     "react-bootstrap": "^1.5.0",
     "react-dom": "^16.12.0",
+    "react-ga": "^3.3.0",
     "react-icons": "^4.2.0",
     "react-loading-overlay": "^1.0.1",
     "react-localization": "^1.0.13",

@@ -12,9 +12,10 @@ import {
 } from './constants/constant.json'
 import { JsonModal } from './components/JsonModal'
 import { Filter } from './constants/entities'
+import ReactGA from 'react-ga'
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-function MainPage({ service, commomService }) {
+function MainPage({ service, commomService, isHttp }) {
   const [selected, setSeleted] = useState([])
   const [filter, setFilter] = useState<Filter>(FILTER_DEFAULT)
   const [tickets, setTickets] = useState<Array<any>>([])
@@ -33,6 +34,12 @@ function MainPage({ service, commomService }) {
   }
 
   const handleClosing = async (): Promise<void> => {
+    ReactGA.event({
+      category: 'Close Mutiple Ticket Project',
+      action: `Close Tickets ${selected.length}`,
+      label: isHttp ? 'Http' : 'Plugin',
+    })
+
     let successNumber = 0
     for (const ticket of selected) {
       const result = filter.status.closedClient
@@ -98,5 +105,6 @@ function MainPage({ service, commomService }) {
 MainPage.propTypes = {
   service: PropTypes.elementType.isRequired,
   commomService: PropTypes.elementType.isRequired,
+  isHttp: PropTypes.bool.isRequired,
 }
 export default MainPage
