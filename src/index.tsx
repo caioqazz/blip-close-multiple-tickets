@@ -8,10 +8,15 @@ import { CommomService } from './api/CommomService'
 import { ResizeObserver } from 'resize-observer'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'react-toastify/dist/ReactToastify.css'
+import { applyPolyfills, defineCustomElements } from 'blip-ds/loader';
 
 IframeMessageProxy.listen()
 
 const rootDiv = document.getElementById('root')
+
+applyPolyfills().then(() => {
+  defineCustomElements(window)
+})
 
 const documentObserver = new ResizeObserver(() => {
   CommomService.setHeight(rootDiv?.scrollHeight)

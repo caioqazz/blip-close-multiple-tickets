@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
-import { Button, Form, Col, Row } from 'react-bootstrap'
-import { FiHelpCircle } from 'react-icons/fi'
+import { Form, Col, Row } from 'react-bootstrap'
 import PropTypes from 'prop-types'
+import { BdsButton, BdsInput, BdsIcon } from 'blip-ds/dist/blip-ds-react'
 
 const CommandForm = ({ handleSubmit }) => {
-  const [key, setkey] = useState('')
-  const [url, setUrl] = useState('')
+  const [key, setkey] = useState<string>('')
+  const [url, setUrl] = useState<string>('')
+
+  const validateForm = () => {
+    return !(key.length > 0 && url.length > 0)
+  }
 
   return (
     <Form
@@ -15,19 +19,17 @@ const CommandForm = ({ handleSubmit }) => {
       }}
     >
       <Form.Group as={Row}>
-        <Form.Label column sm="3">
-          Url to send commands
-        </Form.Label>
-        <Col sm="8">
-          <Form.Control
-            type="text"
-            required
+        <Col sm="11">
+          <BdsInput
+            label="Url to send commands"
             placeholder="https://http.msging.net/commands"
+            required
             value={url}
-            onChange={(e) => {
-              setUrl(e.target.value)
+            onBdsChange={(e) => {
+              setUrl(e.detail.value)
             }}
           />
+
           <br />
         </Col>
         <Col sm="1">
@@ -36,21 +38,23 @@ const CommandForm = ({ handleSubmit }) => {
             rel="noopener noreferrer"
             href="https://forum.blip.ai/t/preciso-de-ajuda-com-blip-close-multiple-tickets/8634"
           >
-            <FiHelpCircle />
+            <BdsIcon
+              size="large"
+              name="info"
+              theme="outline"
+              aria-label="Ícone de informações"
+            />
           </a>
         </Col>
 
-        <Form.Label column sm="3">
-          Header authentication (Authorization)
-        </Form.Label>
-        <Col sm="8">
-          <Form.Control
-            type="text"
-            required
+        <Col sm="11">
+          <BdsInput
+            label="Header authentication (Authorization)"
             placeholder="Key bGFiqpolfyaW9u..."
             value={key}
-            onChange={(e) => {
-              setkey(e.target.value)
+            required
+            onBdsChange={(e) => {
+              setkey(e.detail.value)
             }}
           />
         </Col>
@@ -60,14 +64,23 @@ const CommandForm = ({ handleSubmit }) => {
             rel="noopener noreferrer"
             href="https://help.blip.ai/hc/pt-br/articles/360058712774-Como-encontrar-a-API-KEY-do-meu-bot-"
           >
-            <FiHelpCircle />
+            <BdsIcon
+              size="large"
+              name="info"
+              theme="outline"
+              aria-label="Ícone de informações"
+            />
           </a>
         </Col>
       </Form.Group>
 
-      <Button className="float-right" type="submit">
-        Load
-      </Button>
+      <BdsButton
+        className="float-right"
+        disabled={validateForm()}
+        type="submit"
+      >
+        Load{' '}
+      </BdsButton>
     </Form>
   )
 }
