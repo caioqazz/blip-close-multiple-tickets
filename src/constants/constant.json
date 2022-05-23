@@ -29,6 +29,7 @@
     "status": {
       "closedClient": false,
       "waiting": false,
+      "closedClientInactivity": false,
       "open": true
     }
   },

@@ -3,12 +3,32 @@ import { Button, Form, Col, Card } from 'react-bootstrap'
 import { AiOutlineCloseSquare, AiOutlineFilter } from 'react-icons/ai'
 import PropTypes from 'prop-types'
 
+const STATUS = {
+  CLOSED_CLIENT: 'closedClient',
+  WAITING: 'waiting',
+  OPEN: 'open',
+  CLOSED_BY_INACTIVITY: 'closedClientInactivity',
+}
+
 export const FilterForm = ({
   handleSubmit,
   data,
   handleChange,
 }): JSX.Element => {
   const [filterDisplay, setFilterDisplay] = useState(false)
+
+  const handleStatusChange = (status: string) => {
+    handleChange({
+      ...data,
+      status: {
+        closedClient: false,
+        waiting: false,
+        open: false,
+        closedClientInactivity: false,
+        [status]: true,
+      },
+    })
+  }
 
   return (
     <Form
@@ -55,14 +75,7 @@ export const FilterForm = ({
                   label="ClosedClient"
                   checked={data.status.closedClient}
                   onChange={(e) => {
-                    handleChange({
-                      ...data,
-                      status: {
-                        closedClient: e.target.checked,
-                        waiting: false,
-                        open: false,
-                      },
-                    })
+                    handleStatusChange(STATUS.CLOSED_CLIENT)
                   }}
                 />
                 <Form.Check
@@ -70,14 +83,15 @@ export const FilterForm = ({
                   label="Waiting"
                   checked={data.status.waiting}
                   onChange={(e) => {
-                    handleChange({
-                      ...data,
-                      status: {
-                        waiting: e.target.checked,
-                        closedClient: false,
-                        open: false,
-                      },
-                    })
+                    handleStatusChange(STATUS.WAITING)
+                  }}
+                />
+                <Form.Check
+                  type="radio"
+                  label="Closed by Client Inactivity"
+                  checked={data.status.closedClientInactivity}
+                  onChange={(e) => {
+                    handleStatusChange(STATUS.CLOSED_BY_INACTIVITY)
                   }}
                 />
                 <Form.Check
@@ -85,14 +99,7 @@ export const FilterForm = ({
                   label="Open"
                   checked={data.status.open}
                   onChange={(e) => {
-                    handleChange({
-                      ...data,
-                      status: {
-                        open: e.target.checked,
-                        waiting: false,
-                        closedClient: false,
-                      },
-                    })
+                    handleStatusChange(STATUS.OPEN)
                   }}
                 />
               </Form.Group>
