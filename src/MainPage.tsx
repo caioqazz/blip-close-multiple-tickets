@@ -9,7 +9,7 @@ import {
   FILTER_DEFAULT,
   TICKET_TABLE_MODEL,
   MODAL_DEFAULT,
-} from './constants/constant.json'
+} from './constants/constant'
 import { JsonModal } from './components/JsonModal'
 import { Filter } from './constants/entities'
 import ReactGA from 'react-ga'
