@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 export const sortData = (data: Array<any>, sort: any): Array<any> => {
   if (data !== undefined && data.length > 1) {
     data.sort(
