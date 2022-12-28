@@ -110,7 +110,7 @@ export class ApplicationService {
       else return items
     } catch (error) {
       console.error(`Error to load ${error}`)
-      CommomService.showErrorToast('Error to load tickets')
+      CommomService.showErrorToast(`Error to load tickets - ${error}`)
       return []
     }
   }
