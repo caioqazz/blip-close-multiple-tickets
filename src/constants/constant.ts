@@ -23,7 +23,7 @@ export const FILTER_DEFAULT = {
   },
   'pagination': {
     'skip': 0,
-    'take': 500
+    'take': 200
   },
   'status': {
     'closedClient': false,
@@ -32,7 +32,10 @@ export const FILTER_DEFAULT = {
     'open': true
   }
 }
-
+export const TAGS_DEFAULT = {
+  tags: [],
+  isTagsRequired: false
+}
 export const TICKET_DEFAULT = []
 export const TICKET_TABLE_MODEL = [
   {
