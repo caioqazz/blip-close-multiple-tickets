@@ -257,7 +257,7 @@ export class AxiosService {
       console.error(`Error to load ${error}`)
       return {
         isTagsRequired: false,
-        hasTags: true,
+        hasTags: false,
       }
     }
   }

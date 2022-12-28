@@ -34,6 +34,7 @@ export const FILTER_DEFAULT = {
 }
 export const TAGS_DEFAULT = {
   tags: [],
+  hasTags: false,
   isTagsRequired: false
 }
 export const TICKET_DEFAULT = []
