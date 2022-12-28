@@ -166,8 +166,31 @@ export class ApplicationService {
       return []
     }
   }
-
-  static closeTicket = async (ticketId: string): Promise<boolean> => {
+  static getTags = async (): Promise<any> => {
+    try {
+      const { response } = await IframeMessageProxy.sendMessage({
+        action: 'sendCommand',
+        content: {
+          destination: 'MessagingHubService',
+          command: {
+            method: 'get',
+            uri: '/buckets/blip:desk:tags?$take=100',
+          },
+        },
+      })
+      return JSON.parse(response)
+    } catch (error) {
+      console.error(`Error to load ${error}`)
+      return {
+        isTagsRequired: false,
+        hasTags: false,
+      }
+    }
+  }
+  static closeTicket = async (
+    ticketId: string,
+    tags: Array<string>
+  ): Promise<boolean> => {
     try {
       await IframeMessageProxy.sendMessage({
         action: 'sendCommand',
@@ -181,6 +204,7 @@ export class ApplicationService {
             resource: {
               id: ticketId,
               status: 'ClosedAttendant',
+              tags: tags
             },
           },
         },
@@ -189,13 +213,16 @@ export class ApplicationService {
       return true
     } catch (error) {
       console.error(`Error to close ticket ${ticketId} - ${error}`)
-      CommomService.showErrorToast(`Error to close ticket ${ticketId}`)
+      CommomService.showErrorToast(
+        `Error to close ticket ${ticketId} - ${error}`
+      )
       return false
     }
   }
 
   static closeTicketAlreadyClosedClient = async (
-    ticketId: string
+    ticketId: string,
+    tags: Array<string>
   ): Promise<boolean> => {
     try {
       await IframeMessageProxy.sendMessage({
@@ -209,7 +236,7 @@ export class ApplicationService {
             type: 'application/vnd.iris.ticket+json',
             resource: {
               id: ticketId,
-              tags: [],
+              tags: tags,
               status: 'ClosedClient',
             },
           },
@@ -219,7 +246,7 @@ export class ApplicationService {
       return true
     } catch (error) {
       console.error(`Error to close ticket ${ticketId} - ${error}`)
-      CommomService.showErrorToast(`Error to close ticket ${ticketId}`)
+      CommomService.showErrorToast(`Error to close ticket ${ticketId} - ${error}`)
       return false
     }
   }

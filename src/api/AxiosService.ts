@@ -172,7 +172,10 @@ export class AxiosService {
     }
   }
 
-  static closeTicket = async (ticketId: string): Promise<boolean> => {
+  static closeTicket = async (
+    ticketId: string,
+    tags: Array<string>
+  ): Promise<boolean> => {
     const body = {
       id: uuidv4(),
       to: 'postmaster@desk.msging.net',
@@ -182,6 +185,7 @@ export class AxiosService {
       resource: {
         id: ticketId,
         status: 'ClosedAttendant',
+        tags: tags,
       },
     }
     try {
@@ -204,7 +208,8 @@ export class AxiosService {
   }
 
   static closeTicketAlreadyClosedClient = async (
-    ticketId: string
+    ticketId: string,
+    tags: Array<string>
   ): Promise<boolean> => {
     const body = {
       id: uuidv4(),
@@ -214,7 +219,7 @@ export class AxiosService {
       type: 'application/vnd.iris.ticket+json',
       resource: {
         id: ticketId,
-        tags: [],
+        tags: tags,
         status: 'ClosedClient',
       },
     }
@@ -234,6 +239,26 @@ export class AxiosService {
       console.error(`Error to close ticket ${ticketId} - ${error}`)
       AxiosCommomService.showErrorToast(`Error to close ticket ${ticketId}`)
       return false
+    }
+  }
+  static getTags = async (): Promise<any> => {
+    const body = {
+      id: uuidv4(),
+      method: 'get',
+      uri: '/buckets/blip:desk:tags?$take=100',
+    }
+    try {
+      const response = await axios.post(AxiosService.url, body, {
+        headers: AxiosService.headers,
+      })
+
+      return JSON.parse(response.data)
+    } catch (error) {
+      console.error(`Error to load ${error}`)
+      return {
+        isTagsRequired: false,
+        hasTags: false,
+      }
     }
   }
 }

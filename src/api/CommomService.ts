@@ -1,4 +1,5 @@
 import { IframeMessageProxy } from 'iframe-message-proxy'
+import ReactGA from 'react-ga'
 export class CommomService {
   static startLoading = () =>
     IframeMessageProxy.sendMessage({ action: 'startLoading' })
@@ -18,7 +19,7 @@ export class CommomService {
       },
     })
 
-  static showErrorToast = (message: string) =>
+  static showErrorToast = (message: string) => {
     IframeMessageProxy.sendMessage({
       action: 'toast',
       content: {
@@ -26,7 +27,12 @@ export class CommomService {
         message: message,
       },
     })
-
+    ReactGA.event({
+      category: 'Close Mutiple Ticket Project',
+      action: message,
+      label:  'Plugin',
+    })
+  }
   static withLoading = async (func: Function) => {
     CommomService.startLoading()
 
